@@ -1,14 +1,14 @@
-var Review = require('./review.model');
-var debug = require('debug')('demo:review');
+var Employee = require('./employee.model');
+var debug = require('debug')('lab6:employee');
 
 function sendJSONresponse(res, status, content) {
     res.status(status);
     res.json(content);
 };
 
-module.exports.reviewsReadAll = function(req, res) {
+module.exports.employeesReadAll = function(req, res) {
         
-    debug('Getting all reviews');
+    debug('Getting all employees');
     debug(req.where);
 
     
@@ -35,7 +35,7 @@ module.exports.reviewsReadAll = function(req, res) {
     
     debug('options', options);
     
-    Review
+    Employee
      .find(req.where, null, options)
      .exec()
      .then(function(results){
@@ -47,40 +47,40 @@ module.exports.reviewsReadAll = function(req, res) {
          
 };
 
-module.exports.reviewsReadOne = function(req, res) {
+module.exports.employeesReadOne = function(req, res) {
     
-    if (req.params && req.params.reviewid) {
-        debug('Getting single review with id =', req.params.reviewid );
+    if (req.params && req.params.employeeid) {
+        debug('Getting single employee with id =', req.params.employeeid );
         
-        Review
-        .findById(req.params.reviewid)
+        Employee
+        .findById(req.params.employeeid)
         .exec()
         .then(function(results){
             sendJSONresponse(res, 200, results);
         }).catch(function(err){
             sendJSONresponse(res, 404, {
-                "message": "reviewid not found"
+                "message": "employeeid not found"
             });
         });
 
     } else {
         sendJSONresponse(res, 404, {
-            "message": "reviewid not found"
+            "message": "employeeid not found"
         });
     }
 };
 
-/*   POST a new review
- *   /api/v1/reviews 
+/*   POST a new employee
+ *   /api/v1/employees 
  */
-module.exports.reviewsCreate = function(req, res) {
+module.exports.employeesCreate = function(req, res) {
     
-    debug('Creating a review with data ', req.body);
+    debug('Creating a employee with data ', req.body);
     
-    Review.create({
+    Employee.create({
           author: req.body.author,
           rating: req.body.rating,
-          reviewText: req.body.reviewText
+          employeeText: req.body.employeeText
     })
     .then(function(dataSaved){
         debug(dataSaved);
@@ -93,24 +93,24 @@ module.exports.reviewsCreate = function(req, res) {
      
 };
 
-module.exports.reviewsUpdateOne = function(req, res) {
+module.exports.employeesUpdateOne = function(req, res) {
     
-  if ( !req.params.reviewid ) {
+  if ( !req.params.employeeid ) {
     sendJSONresponse(res, 404, {
-        "message": "Not found, reviewid is required"
+        "message": "Not found, employeeid is required"
     });
     return;
   }
   
-  Review
-    .findById(req.params.reviewid)
+  Employee
+    .findById(req.params.employeeid)
     .exec()
-    .then(function(reviewData) {        
-        reviewData.author = req.body.author;
-        reviewData.rating = req.body.rating;
-        reviewData.reviewText = req.body.reviewText;
+    .then(function(employeeData) {        
+        employeeData.author = req.body.author;
+        employeeData.rating = req.body.rating;
+        employeeData.employeeText = req.body.employeeText;
 
-        return reviewData.save();
+        return employeeData.save();
     })
     .then(function(data){
         sendJSONresponse(res, 200, data);
@@ -121,19 +121,19 @@ module.exports.reviewsUpdateOne = function(req, res) {
         
 };
 
-module.exports.reviewsDeleteOne = function(req, res) {
-  if ( !req.params.reviewid ) {
+module.exports.employeesDeleteOne = function(req, res) {
+  if ( !req.params.employeeid ) {
     sendJSONresponse(res, 404, {
-        "message": "Not found, reviewid is required"
+        "message": "Not found, employeeid is required"
     });
     return;
   }
   
-  Review
-    .findByIdAndRemove(req.params.reviewid)
+  Employee
+    .findByIdAndRemove(req.params.employeeid)
     .exec()
     .then(function(data){
-        debug("Review id " + req.params.reviewid + " deleted");
+        debug("Employee id " + req.params.employeeid + " deleted");
         debug(data);
         sendJSONresponse(res, 204, null);
     })

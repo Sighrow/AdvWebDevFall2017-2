@@ -1,5 +1,5 @@
 
-var debug = require('debug')('demo:queryHandler');
+var debug = require('debug')('lab6:queryHandler');
 
 function search(query) {    
     debug('search setup');

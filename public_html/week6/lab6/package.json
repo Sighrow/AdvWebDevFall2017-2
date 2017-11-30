@@ -1,11 +1,11 @@
 {
-  "name": "demo",
+  "name": "lab6",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "SET PORT=3001 & node ./bin/www",
-    "dev:pc": "SET DEBUG=demo:* & SET PORT=3001 & nodemon ./bin/www",
-    "dev:mac": "DEBUG=demo:* PORT=3001 nodemon ./bin/www"
+    "dev:pc": "SET DEBUG=lab6:* & SET PORT=3001 & nodemon ./bin/www",
+    "dev:mac": "DEBUG=lab6:* PORT=3001 nodemon ./bin/www"
   },
   "dependencies": {
     "body-parser": "~1.18.2",

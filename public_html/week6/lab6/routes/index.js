@@ -1,13 +1,13 @@
 var express = require('express');
 var router = express.Router();
-var ctrlReviews = require('./review.controller');
+var ctrlEmployees = require('./employee.controller');
 
-// reviews
-router.get('/reviews', ctrlReviews.reviewsReadAll);
-router.get('/reviews/:reviewid', ctrlReviews.reviewsReadOne);
-router.post('/reviews', ctrlReviews.reviewsCreate);
-router.put('/reviews/:reviewid', ctrlReviews.reviewsUpdateOne);
-router.delete('/reviews/:reviewid', ctrlReviews.reviewsDeleteOne);
+// employees
+router.get('/employees', ctrlEmployees.employeesReadAll);
+router.get('/employees/:employeeid', ctrlEmployees.employeesReadOne);
+router.post('/employees', ctrlEmployees.employeesCreate);
+router.put('/employees/:employeeid', ctrlEmployees.employeesUpdateOne);
+router.delete('/employees/:employeeid', ctrlEmployees.employeesDeleteOne);
 
 
 module.exports = router;
