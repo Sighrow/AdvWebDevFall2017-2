@@ -78,9 +78,12 @@ module.exports.employeesCreate = function(req, res) {
     debug('Creating a employee with data ', req.body);
     
     Employee.create({
-          author: req.body.author,
-          rating: req.body.rating,
-          employeeText: req.body.employeeText
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          department: req.body.department,
+          startDate: req.body.startDate,
+          jobTitle: req.body.jobTitle,
+          salary: req.body.salary
     })
     .then(function(dataSaved){
         debug(dataSaved);
@@ -106,9 +109,12 @@ module.exports.employeesUpdateOne = function(req, res) {
     .findById(req.params.employeeid)
     .exec()
     .then(function(employeeData) {        
-        employeeData.author = req.body.author;
-        employeeData.rating = req.body.rating;
-        employeeData.employeeText = req.body.employeeText;
+        employeeData.firstName = req.body.firstName;
+        employeeData.lastName = req.body.lastName;
+        employeeData.department = req.body.department;
+        employeeData.startDate = req.body.startDate;
+        employeeData.jobTitle = req.body.jobTitle;
+        employeeData.salary = req.body.salary;
 
         return employeeData.save();
     })
