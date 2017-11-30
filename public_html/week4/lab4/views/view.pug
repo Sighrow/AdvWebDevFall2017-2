@@ -1,0 +1,42 @@
+extends layout
+
+block content
+    div
+        img(src="../load.gif" id="loadgif")
+        h1= title
+    hr
+    br
+    if results.length
+        table(class="tableStyle" border="1")
+            thead   
+                tr
+                    th First Name
+                    th Last Name
+                    th Department
+                    th Job Title
+                    th Start Date
+                    th Salary
+                    th
+                    th
+                    
+            tbody
+              each stuff in results
+                tr
+                    td 
+                        =stuff.firstName
+                    td 
+                        =stuff.lastName
+                    td 
+                        =stuff.department
+                    td 
+                        =stuff.jobTitle
+                    td 
+                        =stuff.startDate.toDateString()
+                    td 
+                        = "$"+stuff.salary.toFixed(2)
+                    td(style="text-align: center;")
+                        a(href="../update/"+stuff._id onclick="document.getElementById('loadgif').style.display='inline'") Update
+                    td(style="text-align: center;")
+                        a(href="../delete/"+stuff._id onclick="document.getElementById('loadgif').style.display='inline'") Delete
+    else
+        p No employees found.

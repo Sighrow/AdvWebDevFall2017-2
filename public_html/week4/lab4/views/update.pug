@@ -1,0 +1,27 @@
+extends layout
+
+block content
+    div
+        img(src="../load.gif" id="loadgif")
+        h1= title
+    hr
+    h2=message
+    form(action="/update/"+results._id, method="post", role="form")     
+        h3 Name
+        input#firstName(type="text" placeholder="First Name" name="firstName" value=results.firstName)
+        input#lastName(type="text" placeholder="Last Name" name="lastName" value=results.lastName)
+        h3 Department
+        select#department(name="department")
+            option(selected=results.department == "Accounting") Accounting
+            option(selected=results.department == "Customer Service") Customer Service
+            option(selected=results.department == "Human Resources") Human Resources
+            option(selected=results.department == "Information Technology") Information Technology
+            option(selected=results.department == "Marketing") Marketing
+        input#jobTitle(type="text" placeholder="Job Title" name="jobTitle" value=results.jobTitle)
+        h3 Salary
+        input#salary(type="number" placeholder="Salary" name="salary" value=results.salary step="1000")
+        h3 Start Date
+        input#startDate(type="date" name="startDate" placeholder="MM/DD/YYYY" value=results.startDate)
+        h3 
+        input(type="submit" value="Update Employee" onclick="document.getElementById('loadgif').style.display='inline'")
+        input(type="hidden" name="_id" value=results._id)

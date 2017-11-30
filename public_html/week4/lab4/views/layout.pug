@@ -1,0 +1,15 @@
+doctype html
+html
+  head
+    title +EMPL
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    div(class='nav')
+        a(href="/" class="dim")
+            img(src="../logoec.png" id="logo")
+        a(href="/" class="navbtn") Add New
+        a(href="/view" class="navbtn") View All
+    block content
+    br
+    hr
+    div(class='nav')

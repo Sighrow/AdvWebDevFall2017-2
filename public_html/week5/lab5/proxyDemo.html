@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Proxy Demo</title>
+        <style type="text/css">
+            textarea {
+                width: 500px;
+                height: 100px;
+            }
+            
+            textarea[name="results"] {
+                 height: 300px;
+            }
+        </style>
+    </head>
+    <body>        
+        
+        <h1>Rest API Demo</h1>
+
+        Verb/HTTP Method:<br />
+        <select name="verb">
+            <option value="GET">GET</option>
+            <option value="POST">POST</option>
+            <option value="PUT">PUT</option>
+            <option value="DELETE">DELETE</option>
+        </select>
+        <br />
+        <br />
+        Resource for endpoint:<br />
+        <input name="resource" value="employees/" />
+        <br />
+        <br />
+        
+        Data(optional):<br />  
+        
+        First name: <input type="text" name="firstName"/>
+        <br />
+        Last name: <input type="text" name="lastName"/>
+        <br />
+        Department: <input type="text" name="department" list="departments" placeholder="Select Department">        
+        <br />
+        Job title: <input type="text" name="jobTitle"/>
+        <br />
+        Start date: <input type="date" name="startDate"/>
+        <br />
+        Salary: <input type="number" name="salary"/>
+        <br />
+        
+                
+        <br />
+        <br />
+        <button>Make Call</button>
+        <h3>Employees</h3>
+        <input name="query" size="70" readonly />
+        <br />
+        <textarea name="results" readonly></textarea>
+
+        <datalist id="departments">
+            <option value="Accounting">
+            <option value="Customer Service">
+            <option value="Human Resources">
+            <option value="Information Technology">
+            <option value="Marketing">       
+        </datalist>
+        
+        <script type="text/javascript">
+        
+            var callBtn = document.querySelector('button');            
+            callBtn.addEventListener('click', makeCall);
+        
+            function makeCall() {
+                
+                let data = {
+                    'firstName' : document.querySelector('input[name="firstName"]').value,
+                    'lastName' : document.querySelector('input[name="lastName"]').value,
+                    'department' : document.querySelector('input[name="department"]').value,
+                    'startDate' : document.querySelector('input[name="startDate"]').value,
+                    'jobTitle' : document.querySelector('input[name="jobTitle"]').value,
+                    'salary' : document.querySelector('input[name="salary"]').value
+                };   
+                
+                
+                let verbfield = document.querySelector('select[name="verb"]');
+                let verb = verbfield.options[verbfield.selectedIndex].value;
+                let resource = document.querySelector('input[name="resource"]').value;                         
+                let results = document.querySelector('textarea[name="results"]');
+                let url = `http://localhost:3001/api/v1/${resource}`;
+                   
+                document.querySelector('input[name="query"]').value = url;
+                
+                let myHeaders = new Headers();
+                myHeaders.set('Content-Type', 'application/json');
+                let myInit = { method: verb,                                
+                               headers: myHeaders,
+                               mode: 'cors',
+                               cache: 'default' 
+                             };
+                             
+                if ( ['POST', 'PUT'].indexOf(verb) > -1 ) {
+                    myInit.body = JSON.stringify(data)
+                }
+                    
+                let myRequest = new Request(url, myInit);
+                
+                fetch( myRequest ).then(function(response) { 
+                    let contentType = response.headers.get("content-type");
+                    if(contentType && contentType.includes("application/json")) {
+                      return response.text();
+                    }
+                    if ( response.status === 204 ) {
+                        return 'Delete';
+                    }
+                    throw new TypeError("Oops, we haven't got JSON!");
+                }).then(function(jsonText) {
+                    results.value = jsonText;
+                }).catch(function(err) {
+                    console.log(err);
+                });              
+                 
+            }
+        </script>
+    </body>
+</html>
